@@ -16,6 +16,7 @@ object scalaObject {
   println("longest palindrome === "+longestPalindrome("abcbaxyzyxa"))
 
   }
+  /*To get the median of sorted arrays the time complexity */
   def findMedianSortedArrays(nums1: Array[Int], nums2: Array[Int]) : Double = {
     if( nums1.length > nums2.length ) return findMedianSortedArrays(nums2,nums1)
     val x = nums1.length
@@ -28,18 +29,13 @@ object scalaObject {
     {
       val partitionX = (low+high)/2
       val partitionY = ((x+y+1)/2 - partitionX )
-      println("partition X "+partitionX)
-      println("partition Y "+partitionY)
       val maxLeftX = if (partitionX == 0) Integer.MIN_VALUE else nums1(partitionX -1 )
       val minRightX = if (partitionX == x) Integer.MAX_VALUE else nums1(partitionX)
       val maxLeftY = if (partitionY == 0) Integer.MIN_VALUE else nums2(partitionY -1 )
       val minRightY = if (partitionY == y) Integer.MAX_VALUE else nums2(partitionY)
-      println("If condition maxLeftX "+maxLeftX+" minRightY "+minRightY+" maxLeftY "+maxLeftY+"  minRightX "+minRightX)
       if( maxLeftX <= minRightY && maxLeftY <= minRightX ) {
 
         if((x+y)%2 == 0 ) {
-          println("scala.math.max(maxLeftX,maxLeftY) ===="+scala.math.max(maxLeftX,maxLeftY))
-          println("scala.math.min(minRightX,minRightY) ===="+scala.math.min(minRightX,minRightY))
           result = (scala.math.max(maxLeftX,maxLeftY) + scala.math.min(minRightX,minRightY)).toDouble/2
           return result
         }
@@ -129,4 +125,109 @@ object scalaObject {
     return head.next
 
   }
+  /*Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.*/
+  def twoSum(nums: Array[Int], target: Int): Array[Int] = {
+    var start : Int =0
+    var end : Int =nums.length-1
+    var mid : Int = if (end < 2) 0 else if (end % 2 == 0) end/2 else (end-1)/2
+
+    val retArr :Array[Int] = new Array(2)
+    for(primary <- start to end )
+    {
+      val req = target-nums(primary)
+      if(nums(end) == req) {
+        retArr(0)= primary
+        retArr(1)= end
+        return retArr
+      }
+      for (sec <- primary.+(1) to end)
+      {
+        if(nums(sec) == req) {
+          retArr(0)= primary
+          retArr(1)= sec
+          return retArr
+        }
+      }
+    }
+    return retArr
+  }
+
+/*Given a string s, find the length of the longest substring without repeating characters.*/
+  def lengthOfLongestSubstring(s: String): Int = {
+    var start = 0
+    var end = 0
+    var len = s.length()-1
+    var longest = 0
+    val mapInt : Set[Char]  = Set()
+
+    while (end <= len)
+    {
+      var c = s.charAt(end)
+
+      while(mapInt contains c ){
+        mapInt -= s.charAt(start)
+        start = start +1
+      }
+      mapInt += s(end)
+      longest = scala.math.max(longest,end-start+1)
+      end = end + 1
+
+    }
+    return longest
+  }
+
+  /*Given an integer x, return true if x is palindrome integer.*/
+  def isPalindrome(x: Int): Boolean = {
+    var out =0
+    var fetch = 0
+    var modNum = x
+    var Palindrome =false
+
+    if (modNum == 0) Palindrome = true
+
+    while (modNum > 0)
+    {
+      fetch = modNum%10
+      modNum=modNum/10
+      out = out*10+fetch
+      if (out == x)
+      {
+        Palindrome = true
+      }
+
+    }
+    return Palindrome
+  }
+
+  def romanToInt(s: String): Int = {
+    var res = 0
+    var length = s.length()
+    var loop = length-1
+    while(loop >= 0)
+    {
+      var out = s.charAt(loop) match {
+        case 'V' => 5
+        case 'L' => 50
+        case 'D' => 500
+        case 'M' => 1000
+        case 'I' => 1
+        case 'X' => 10
+        case 'C' => 100
+      }
+      res = res+out
+      if(s.charAt(loop) == 'I' && loop < (length-1)){
+        if(s.charAt(loop+1)=='V' || s.charAt(loop+1)=='X') res-=2;
+      }
+      if(s.charAt(loop) == 'X'  && loop < (length-1)){
+        if(s.charAt(loop+1)=='L' || s.charAt(loop+1)=='C') res-=20;
+      }
+      if(s.charAt(loop) == 'C'  && loop < (length-1)){
+        if(s.charAt(loop+1)=='D' || s.charAt(loop+1)=='M') res-=200;
+      }
+      loop = loop-1
+    }
+    return res
+  }
+
+
 }
