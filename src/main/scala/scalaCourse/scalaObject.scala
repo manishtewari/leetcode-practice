@@ -1,5 +1,7 @@
 package scalaCourse
 
+import scala.util.control.Breaks.break
+
 object scalaObject {
   class ListNode(_x: Int = 0, _next: ListNode = null) {
         var next: ListNode = _next
@@ -14,6 +16,7 @@ object scalaObject {
     var b = new ListNode(5,new ListNode(6,new ListNode(4,null)))
     println("longest common prefix being ======"+longestCommonPrefix(Array("flower","flown","beautiful")))
   println("sum of two lists == "+addTwoNumbers(a,b).x)
+    println("roman to integer == "+romanToInt("ZXVX"))
   println("longest palindrome === "+longestPalindrome("abcbaxyzyxab"))
 
   }
@@ -201,6 +204,7 @@ object scalaObject {
   }
 
   def romanToInt(s: String): Int = {
+
     var res = 0
     var length = s.length()
     var loop = length-1
@@ -214,6 +218,11 @@ object scalaObject {
         case 'I' => 1
         case 'X' => 10
         case 'C' => 100
+        case _ => 0
+      }
+      if (out == 0) {
+        println("Not A Roman Value")
+        break
       }
       res = res+out
       if(s.charAt(loop) == 'I' && loop < (length-1)){
