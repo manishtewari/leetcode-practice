@@ -12,8 +12,9 @@ object scalaObject {
     println("find median "+findMedianSortedArrays(array1,array2))*/
     var a = new ListNode(3,new ListNode(4,new ListNode(2,null)))
     var b = new ListNode(5,new ListNode(6,new ListNode(4,null)))
+    println("longest common prefix being ======"+longestCommonPrefix(Array("flower","flown","beautiful")))
   println("sum of two lists == "+addTwoNumbers(a,b).x)
-  println("longest palindrome === "+longestPalindrome("abcbaxyzyxa"))
+  println("longest palindrome === "+longestPalindrome("abcbaxyzyxab"))
 
   }
   /*To get the median of sorted arrays the time complexity */
@@ -165,10 +166,10 @@ object scalaObject {
       var c = s.charAt(end)
 
       while(mapInt contains c ){
-        mapInt -= s.charAt(start)
+        mapInt.-(s.charAt(start))
         start = start +1
       }
-      mapInt += s(end)
+      mapInt.+(s.charAt(end))
       longest = scala.math.max(longest,end-start+1)
       end = end + 1
 
@@ -228,6 +229,35 @@ object scalaObject {
     }
     return res
   }
-
-
+  /*Initializes the process*/
+  def longestCommonPrefix(strs : Array[String]):String ={
+    if (strs == null || strs.length ==0) return ""
+    return longestCommon(strs,0,strs.length-1)
+  }
+  /*This function distributes the list of string & tries to find the common prefix*/
+  def longestCommon(strs: Array[String], left : Int, right: Int): String= {
+    if (left == right){
+      return strs(left)
+    }
+    else {
+      var mid : Int = (left+right)/2
+      var lcpLeft = longestCommon(strs,left,mid)
+      var lcpRight = longestCommon(strs,mid+1,right)
+      return commonPrefix(lcpLeft,lcpRight)
+    }
+  }
+  /*The common prefix captures the common substring value starting from 0th index*/
+  def commonPrefix(left :String, right: String): String = {
+    var min = Math.min(left.length(), right.length())
+    var i : Int = 0
+    while (i < min)
+    {
+      if(left.charAt(i) != right.charAt(i))
+      {
+        return left.substring(0,i)
+      }
+      i= i+1
+    }
+    return left.substring(0,min)
+  }
 }
