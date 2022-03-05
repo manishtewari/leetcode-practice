@@ -269,4 +269,22 @@ object scalaObject {
     }
     return left.substring(0,min)
   }
+    def reverse(x: Int): Int = {
+    var isNegative = x < 0
+    var mod : Int = abs(x)
+    var ret: Int = 0
+    var result : Long =0
+    def reverseIt (x: Int, rev : Long): Long = {
+      if (x != 0) {
+        result = rev * 10 + x % 10
+        if (result > scala.Int.MaxValue || result < scala.Int.MinValue) result= 0
+        reverseIt(x / 10,result)
+      }
+      result
+    }
+    var out = reverseIt(mod,ret).toInt
+    if (isNegative) out = 0-out
+
+    return out
+  }
 }
