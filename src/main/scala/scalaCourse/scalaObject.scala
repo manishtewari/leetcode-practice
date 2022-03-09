@@ -1,7 +1,8 @@
 package scalaCourse
 
 import scala.util.control.Breaks.break
-
+import scala.util.control.Breaks.break
+import scala.math._
 object scalaObject {
   class ListNode(_x: Int = 0, _next: ListNode = null) {
         var next: ListNode = _next
@@ -16,7 +17,7 @@ object scalaObject {
     var b = new ListNode(5,new ListNode(6,new ListNode(4,null)))
     println("longest common prefix being ======"+longestCommonPrefix(Array("flower","flown","beautiful")))
   println("sum of two lists == "+addTwoNumbers(a,b).x)
-    println("roman to integer == "+romanToInt("ZXVX"))
+   // println("roman to integer == "+romanToInt("ZXVX"))
   println("longest palindrome === "+longestPalindrome("abcbaxyzyxab"))
 
   }
@@ -286,5 +287,30 @@ object scalaObject {
     if (isNegative) out = 0-out
 
     return out
+  }
+  def maxArea(height: Array[Int]): Int = {
+    var left = 0
+    var right = height.length-1
+    var currArea = 0
+    var result = 0
+    while (left < right)
+    {
+      currArea = min(height(left),height(right))*(right-left)
+      result = max(result,currArea)
+      if(height(left) < height(right))
+      {
+        left=left+1       }
+      else
+      {
+        right=right-1       }    }
+    return result
+  }
+  def max(a:Int, b:Int): Int ={
+    if (a>b) a
+    else b
+  }
+  def min(a:Int, b:Int): Int ={
+    if (a<b) a
+    else b
   }
 }
