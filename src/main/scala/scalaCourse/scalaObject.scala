@@ -13,12 +13,18 @@ object scalaObject {
   /* var array1 :Array[Int] = Array(1,2)
     var array2 :Array[Int] = Array(3,4)
     println("find median "+findMedianSortedArrays(array1,array2))*/
-    var a = new ListNode(3,new ListNode(4,new ListNode(2,null)))
-    var b = new ListNode(5,new ListNode(6,new ListNode(4,null)))
+    var a = new ListNode(3,new ListNode(4,new ListNode(5,new ListNode(9,new ListNode(19,null)))))
+    var b = new ListNode(1,new ListNode(6,new ListNode(8,new ListNode(91,null))))
     println("longest common prefix being ======"+longestCommonPrefix(Array("flower","flown","beautiful")))
-  println("sum of two lists == "+addTwoNumbers(a,b).x)
+    println("sum of two lists == "+addTwoNumbers(a,b).x)
    // println("roman to integer == "+romanToInt("ZXVX"))
-  println("longest palindrome === "+longestPalindrome("abcbaxyzyxab"))
+    println("longest palindrome === "+longestPalindrome("abcbaxyzyxab"))
+    println("Merge two list ===="+mergeTwoLists(a,b))
+   /* var listNode = new ListNode()
+    while(listNode.next != null)
+      {
+        println(listNode.x)
+      }*/
 
   }
   /*To get the median of sorted arrays the time complexity */
@@ -99,30 +105,23 @@ object scalaObject {
   def addTwoNumbers(l1: ListNode, l2: ListNode): ListNode = {
     var head = new ListNode(0)
     var result = head
-
     var current_sum =0
     var carry = 0
     var p1 = l1
     var p2 = l2
 
     while (p1 != null || p2 != null ){
-
       var v1 = 0
       var v2 = 0
-
       if(p1 != null) v1 = p1.x else v1 = 0
       if(p2 != null) v2 = p2.x else v2 = 0
-
       current_sum = v1 + v2 +carry
       carry = current_sum / 10
-
       var new_node = new ListNode(current_sum % 10)
       result.next = new_node
       result = result.next
-
       if(p1 != null) p1 = p1.next
       if(p2 != null) p2 = p2.next
-
     }
     if (carry > 0 ) {
       result.next = new ListNode(carry)
@@ -312,5 +311,25 @@ object scalaObject {
   def min(a:Int, b:Int): Int ={
     if (a<b) a
     else b
+  }
+
+  def mergeTwoLists(list1: ListNode, list2: ListNode): ListNode = {
+    if (list1 == null && list2 ==null) return list1
+    if (list1 == null ) return list2
+    if (list2 == null ) return list1
+    var result = new ListNode()
+    var firstList = list1
+    var secondList = list2
+    if (list1.x >= list2.x) {
+      result = list2
+      secondList = list2.next
+    }
+    else {
+      result = list1
+      firstList = list1.next
+    }
+    result.next = mergeTwoLists(firstList, secondList)
+
+    return result
   }
 }
