@@ -20,6 +20,9 @@ object scalaObject {
    // println("roman to integer == "+romanToInt("ZXVX"))
     println("longest palindrome === "+longestPalindrome("abcbaxyzyxab"))
     println("Merge two list ===="+mergeTwoLists(a,b))
+    println("myPow value === "+myPow(1.00000,2147483647))
+    println("Rotate Array == "+ArrayPrint(rotateArray(Array(9,46,2,8,54,78,12,43,17,18),6)))
+
    /* var listNode = new ListNode()
     while(listNode.next != null)
       {
@@ -64,6 +67,14 @@ object scalaObject {
       }
     }
     return result
+  }
+
+  def ArrayPrint (Arr : Array[Int]) ={
+    var index = 0
+    while (index < Arr.length ) {
+      print(Arr(index)+" ")
+      index = index + 1
+    }
   }
 
   def longestPalindrome(str : String) : String ={
@@ -255,7 +266,7 @@ object scalaObject {
       return commonPrefix(lcpLeft,lcpRight)
     }
   }
-  /*The common prefix captures the common substring value starting from 0th index*/
+ // /*The common prefix captures the common substring value starting from 0th index*/ abcdedcba
   def commonPrefix(left :String, right: String): String = {
     var min = Math.min(left.length(), right.length())
     var i : Int = 0
@@ -331,5 +342,51 @@ object scalaObject {
     result.next = mergeTwoLists(firstList, secondList)
 
     return result
+  }
+
+
+  def rotateArray(Arr : Array[Int], order : Int): Array[Int]={
+    var ord = order%Arr.length
+    if(Arr == null || ord < 0 ) {
+      throw new IllegalArgumentException("Illegal Argument!")
+    }
+    var a = Arr.length - ord
+    reverseArray(Arr,0,a-1)
+    reverseArray(Arr,a,Arr.length-1)
+    reverseArray(Arr,0,Arr.length-1)
+  }
+  def reverseArray(Arr :Array[Int], left :Int, right :Int): Array[Int] =
+  {
+    if (Arr == null || Arr.length ==1)
+      return Arr
+    var start = left
+    var end = right
+
+    while (start < end)
+      {
+        var temp = Arr(start)
+        Arr(start) = Arr(end)
+        Arr(end) = temp
+        start = start + 1
+        end = end-1
+      }
+      return Arr
+  }
+  def myPow(x: Double, n: Int): Double = {
+    var coeff = 1.0
+    var pow= n
+    if (n <= scala.Int.MinValue) if (x > 1.0) return 0 else x
+    if (n >= scala.Int.MaxValue) if (x > 1.0) return 0 else x
+    if (n < 0 )
+      {
+        return myPow(1.0/x,n*(-1))
+      }
+    else if (n == 0 ) return 1
+     while (pow > 0 )
+       {
+         coeff = coeff*x
+         pow = pow-1
+       }
+       return coeff
   }
 }
